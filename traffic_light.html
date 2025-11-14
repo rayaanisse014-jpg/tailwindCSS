@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tailwind Traffic Lights</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-900">
+
+  <!-- Traffic Light Container -->
+  <div class="bg-gray-800 p-6 rounded-3xl shadow-2xl border-4 border-black">
+
+    <!-- Red Light -->
+    <div id="red"
+         class="w-24 h-24 rounded-full mb-6 shadow-inner transition-all duration-300">
+    </div>
+
+    <!-- Yellow Light -->
+    <div id="yellow"
+         class="w-24 h-24 rounded-full mb-6 shadow-inner transition-all duration-300">
+    </div>
+
+    <!-- Green Light -->
+    <div id="green"
+         class="w-24 h-24 rounded-full shadow-inner transition-all duration-300">
+    </div>
+
+  </div>
+
+  <script>
+    // Get elements
+    const red = document.getElementById("red");
+    const yellow = document.getElementById("yellow");
+    const green = document.getElementById("green");
+
+    // Helper function to switch lights
+    function turnOn(light) {
+      red.classList.remove("bg-red-600", "opacity-30");
+      yellow.classList.remove("bg-yellow-400", "opacity-30");
+      green.classList.remove("bg-green-600", "opacity-30");
+
+      // Dim all first
+      red.classList.add("opacity-30");
+      yellow.classList.add("opacity-30");
+      green.classList.add("opacity-30");
+
+      // Turn on the selected light
+      if (light === "red") {
+        red.classList.remove("opacity-30");
+        red.classList.add("bg-red-600");
+      }
+      if (light === "yellow") {
+        yellow.classList.remove("opacity-30");
+        yellow.classList.add("bg-yellow-400");
+      }
+      if (light === "green") {
+        green.classList.remove("opacity-30");
+        green.classList.add("bg-green-600");
+      }
+    }
+
+    // Traffic light sequence function
+    function startTrafficLight() {
+      turnOn("red"); // Start with red
+
+      setTimeout(() => {
+        turnOn("yellow");
+      }, 2000);
+
+      setTimeout(() => {
+        turnOn("green");
+      }, 3000);
+
+      setTimeout(() => {
+        turnOn("yellow");
+      }, 6000);
+
+      setTimeout(() => {
+        startTrafficLight(); // Loop again
+      }, 7000);
+    }
+
+    // Start sequence
+    turnOn("red");        // Initial state
+    setTimeout(startTrafficLight, 1000);
+  </script>
+
+</body>
+</html>
